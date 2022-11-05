@@ -1,31 +1,3 @@
 'use strict';
 
-DataView.prototype.setUint24 = function (e, i) {
-    this.setUint8(e++, (i >> 16) & 255), this.setUint8(e++, (i >> 8) & 255), this.setUint8(e++, i & 255);
-};
-DataView.prototype.getUint24 = function (e) {
-    return (this.getUint8(e++) << 16) | (this.getUint8(e++) << 8) | this.getUint8(e);
-};
-DataView.prototype.setInt24 = function (e, i) {
-    this.setUint8(e++, ((i + 8388608) >> 16) & 255), this.setUint8(e++, ((i + 8388608) >> 8) & 255), this.setUint8(e++, (i + 8388608) & 255);
-};
-DataView.prototype.getInt24 = function (e) {
-    return ((this.getUint8(e++) << 16) - 8388608) | (this.getUint8(e++) << 8) | this.getUint8(e);
-};
-DataView.prototype.setString = function (e, i) {
-    if (i.length > 255) throw new RangeError(`The maximum string length is 255. String with length of ${i.length} is too large!`);
-    this.setUint8(e++, i.length & 255);
-    for (let o = 0; o < i.length; o++) this.setUint8(e++, i.charCodeAt(o) & 255);
-};
-DataView.prototype.getString = function (e) {
-    let i = this.getUint8(e++),
-        o = '';
-    for (let r = 0; r < i; r++) o += String.fromCharCode(this.getUint8(e++));
-    return o;
-};
-var n = 0,
-    t = { Uint8: n++, Uint16: n++, Uint24: n++, Uint32: n++, Int8: n++, Int16: n++, Int24: n++, Int32: n++, BigInt64: n++, BigUint64: n++, Float32: n++, Float64: n++, String: n++ };
-var a = { [t.Uint8]: DataView.prototype.setUint8, [t.Uint16]: DataView.prototype.setUint16, [t.Uint24]: DataView.prototype.setUint24, [t.Uint32]: DataView.prototype.setUint32, [t.Int8]: DataView.prototype.setInt8, [t.Int16]: DataView.prototype.setInt16, [t.Int24]: DataView.prototype.setInt24, [t.Int32]: DataView.prototype.setInt32, [t.BigInt64]: DataView.prototype.setBigInt64, [t.BigUint64]: DataView.prototype.setBigUint64, [t.Float32]: DataView.prototype.setFloat32, [t.Float64]: DataView.prototype.setFloat64, [t.String]: DataView.prototype.setString };
-var p = { [t.Uint8]: DataView.prototype.getUint8, [t.Uint16]: DataView.prototype.getUint16, [t.Uint24]: DataView.prototype.getUint24, [t.Uint32]: DataView.prototype.getUint32, [t.Int8]: DataView.prototype.getInt8, [t.Int16]: DataView.prototype.getInt16, [t.Int24]: DataView.prototype.getInt24, [t.Int32]: DataView.prototype.getInt32, [t.BigInt64]: DataView.prototype.getBigInt64, [t.BigUint64]: DataView.prototype.getBigUint64, [t.Float32]: DataView.prototype.getFloat32, [t.Float64]: DataView.prototype.getFloat64, [t.String]: DataView.prototype.getString };
-console.log(a);
-console.log(p);
+DataView.prototype.setUint24=function(i,t){this.setUint8(i++,t>>16&255),this.setUint8(i++,t>>8&255),this.setUint8(i++,t&255);};DataView.prototype.getUint24=function(i){return this.getUint8(i++)<<16|this.getUint8(i++)<<8|this.getUint8(i)};DataView.prototype.setInt24=function(i,t){this.setUint8(i++,t+8388608>>16&255),this.setUint8(i++,t+8388608>>8&255),this.setUint8(i++,t+8388608&255);};DataView.prototype.getInt24=function(i){return (this.getUint8(i++)<<16)-8388608|this.getUint8(i++)<<8|this.getUint8(i)};DataView.prototype.setString=function(i,t){if(t.length>255)throw new RangeError(`The maximum string length is 255. String with length of ${t.length} is too large!`);this.setUint8(i++,t.length&255);for(let e=0;e<t.length;e++)this.setUint8(i++,t.charCodeAt(e)&255);};DataView.prototype.getString=function(i){let t=this.getUint8(i++),e="";for(let n=0;n<t;n++)e+=String.fromCharCode(this.getUint8(i++));return e};var o=class{constructor(t){this.sList={},this.sData={},this.NAME_ID_MAP=new Map,this.sid=0,this.init(t);}init(t){for(let{name:e,data:n}of t)this.addSchema(e,n);}addSchema(t,e){if(this.sList[t])throw new Error(`A schema with this name: ${t} already exists!`);let n=this.sid++;if(n>=256)throw new Error("You have created too many schemas!, there's only support for 256 unique message schemas!");this.NAME_ID_MAP.set(n,t),this.NAME_ID_MAP.set(t,n),this.sList[n]=e,this.sData[n]=this.getTypesArray(e);}getTypesArray(t){let e=[];for(let n in t){let r=t[n];if(typeof r=="number")e.push(r);else if(typeof r=="object")e=e.concat(this.getTypesArray(r));else throw new Error(`A schema Property name was not set to a binary-type or an object! Property: ${n} Value: ${r}`)}return e}get(t){if(!this.NAME_ID_MAP.has(t))throw new Error(`You are trying to encode a schema that was not created. Please include ${t} in the schemas`);let e=this.NAME_ID_MAP.get(t),n=this.sData[e],r=this.sList[e];return {binTypesArr:n,sList:r}}getID(t){return this.NAME_ID_MAP.get(t)}};var c={[0]:1,[1]:2,[2]:3,[3]:4,[4]:1,[5]:2,[6]:3,[7]:4,[8]:8,[9]:8,[10]:4,[11]:8,[12]:-1};var l={[0]:DataView.prototype.setUint8,[1]:DataView.prototype.setUint16,[2]:DataView.prototype.setUint24,[3]:DataView.prototype.setUint32,[4]:DataView.prototype.setInt8,[5]:DataView.prototype.setInt16,[6]:DataView.prototype.setInt24,[7]:DataView.prototype.setInt32,[8]:DataView.prototype.setBigInt64,[9]:DataView.prototype.setBigUint64,[10]:DataView.prototype.setFloat32,[11]:DataView.prototype.setFloat64,[12]:DataView.prototype.setString};var h=class{constructor(t){this.schema=t;}encode(t,e,n=65535){console.log("name",t),console.log("data",e);let r=new DataView(new ArrayBuffer(n)),s=0,{binTypesArr:m,sList:y}=this.schema.get(t);r.setUint8(s++,this.schema.getID(t));let f=this.getValues(e);console.log("typesarr",m),console.log("valuesArr",f);for(let a=0;a<m.length;a++){let g=m[a],U=l[g],p=f[a];U.bind(r)(s,p);let D=c[g];s+=D===-1?1+(p.length&255):c[g];}return new Uint8Array(r.buffer,0,s).slice()}getValues(t){let e=[];for(let n in t){let r=t[n];typeof r=="object"?e=e.concat(this.getValues(r)):e.push(r);}return e}};var b=new o([{name:"myMessageName",data:{code:1,message:12,nest:{a:0,b:0}}}]),w=new h(b),I=w.encode("myMessageName",{code:1111,message:"this is a string",nest:{a:3,b:5}});console.log(I);

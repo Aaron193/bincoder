@@ -8,6 +8,17 @@ export interface TSchema {
     name: string;
     data: TData;
 }
+export type TUData = {
+    [key: string]: number | string | TUData;
+};
+export interface TUserData {
+    name: string;
+    data: TUData;
+}
+
+export type TsData = {
+    [key: string]: BincoderTypes[];
+};
 
 const schema: TSchema = {
     name: 'hello',

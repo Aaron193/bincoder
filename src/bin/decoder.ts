@@ -1,6 +1,6 @@
 import { BincoderTypes } from '../types/binaryTypes';
 
-export const BitPacketDecoder = {
+export const BitPacketDecoder: Partial<Record<BincoderTypes, Function>> = {
     [BincoderTypes.Uint8]: DataView.prototype.getUint8,
     [BincoderTypes.Uint16]: DataView.prototype.getUint16,
     [BincoderTypes.Uint24]: DataView.prototype.getUint24,

@@ -1,0 +1,34 @@
+{
+    "name": "bincoder",
+    "version": "1.0.0",
+    "description": "A fast & friendly binary compression library for encoding/decoding object data into binary!",
+    "main": "index.js",
+    "scripts": {
+        "start": "tsup --config tsup.config.ts"
+    },
+    "keywords": [
+        "encode",
+        "decode",
+        "compression",
+        "compress",
+        "binary",
+        "schema",
+        "game",
+        "network",
+        "javascript"
+    ],
+    "author": "Aaron",
+    "license": "ISC",
+    "files": [
+        "index.js"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "__TODO__"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20",
+        "tsup": "^6.4.0",
+        "typescript": "^4.8.4"
+    }
+}

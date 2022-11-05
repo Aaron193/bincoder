@@ -8,6 +8,6 @@ export default defineConfig({
     treeshake: true,
     sourcemap: false,
     clean: true,
-    minify: true,
+    minify: false,
     esbuildPlugins: [],
 });

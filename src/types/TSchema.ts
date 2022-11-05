@@ -20,18 +20,18 @@ export type TsData = {
     [key: string]: BincoderTypes[];
 };
 
-const schema: TSchema = {
-    name: 'hello',
-    data: {
-        x: 11,
-        y: 3,
-        z: 4,
-        h: {
-            q: 3,
-            r: 7,
-            c: {
-                l: 6,
-            },
-        },
-    },
-};
+// const schema: TSchema = {
+//     name: 'hello',
+//     data: {
+//         x: 11,
+//         y: 3,
+//         z: 4,
+//         h: {
+//             q: 3,
+//             r: 7,
+//             c: {
+//                 l: 6,
+//             },
+//         },
+//     },
+// };

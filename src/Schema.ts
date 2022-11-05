@@ -73,6 +73,9 @@ export class Schema {
     public getID(name: string): number {
         return this.NAME_ID_MAP.get(name) as number;
     }
+    public getName(id: number): string {
+        return this.NAME_ID_MAP.get(id) as string;
+    }
 }
 /*
 data: {

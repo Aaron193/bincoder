@@ -4,6 +4,7 @@ import { BitPacketDecoder } from './bin/decoder';
 import { BincoderTypes } from './types/binaryTypes';
 import { Schema } from './Schema';
 import { Encoder } from './Encoder';
+import { Decoder } from './Decoder';
 
 const schema = new Schema([
     {
@@ -34,3 +35,7 @@ console.log(message);
 //   115, 116, 114, 105, 110, 103,   3,
 //     5
 // ]
+
+const decoder = new Decoder(schema);
+decoder.decode(message.buffer);
+// { code: 1111, message: 'this is a string', nest: { a: 3, b: 5 } }

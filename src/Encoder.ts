@@ -9,8 +9,8 @@ export class Encoder {
         this.schema = schema;
     }
     public encode(name: string, data: TUData, space: number = 0xffff) {
-        console.log('name', name);
-        console.log('data', data);
+        // console.log('name', name);
+        // console.log('data', data);
 
         const dataView = new DataView(new ArrayBuffer(space));
         let offset = 0;
@@ -19,8 +19,8 @@ export class Encoder {
         dataView.setUint8(offset++, this.schema.getID(name));
 
         const dataValArr = this.getValues(data);
-        console.log('typesarr', binTypesArr);
-        console.log('valuesArr', dataValArr);
+        // console.log('typesarr', binTypesArr);
+        // console.log('valuesArr', dataValArr);
         // array of binary types
         for (let i = 0; i < binTypesArr.length; i++) {
             const bType = binTypesArr[i];

@@ -6,6 +6,12 @@ import { Schema } from './Schema';
 import { Encoder } from './Encoder';
 import { Decoder } from './Decoder';
 
+const getProcessMs = () => {
+    //@ts-ignore
+    const hrTime = process.hrtime();
+    return (hrTime[0] * 1e9 + hrTime[1]) / 1e6;
+};
+
 const schema = new Schema([
     {
         name: 'myMessageName',
@@ -18,7 +24,7 @@ const schema = new Schema([
 ]);
 
 const encoder = new Encoder(schema);
-
+const t1 = getProcessMs();
 const message = encoder.encode('myMessageName', {
     code: 1111,
     message: 'this is a string',
@@ -27,15 +33,13 @@ const message = encoder.encode('myMessageName', {
         b: 5,
     },
 });
+const t2 = getProcessMs();
+console.log('encoding took ' + (t2 - t1) + 'ms');
 
 console.log(message);
-// Uint8Array(22) [
-//     0,   4,  87,  16, 116, 104, 105,
-//   115,  32, 105, 115,  32,  97,  32,
-//   115, 116, 114, 105, 110, 103,   3,
-//     5
-// ]
 
 const decoder = new Decoder(schema);
+const t3 = getProcessMs();
 decoder.decode(message.buffer);
-// { code: 1111, message: 'this is a string', nest: { a: 3, b: 5 } }
+const t4 = getProcessMs();
+console.log('decoding took ' + (t4 - t3) + 'ms');

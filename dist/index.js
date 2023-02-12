@@ -216,6 +216,10 @@ var Decoder = class {
 };
 
 // src/index.ts
+var getProcessMs = () => {
+  const hrTime = process.hrtime();
+  return (hrTime[0] * 1e9 + hrTime[1]) / 1e6;
+};
 var schema = new Schema([
   {
     name: "myMessageName",
@@ -227,6 +231,7 @@ var schema = new Schema([
   }
 ]);
 var encoder = new Encoder(schema);
+var t1 = getProcessMs();
 var message = encoder.encode("myMessageName", {
   code: 1111,
   message: "this is a string",
@@ -235,6 +240,11 @@ var message = encoder.encode("myMessageName", {
     b: 5
   }
 });
+var t2 = getProcessMs();
+console.log("encoding took " + (t2 - t1) + "ms");
 console.log(message);
 var decoder = new Decoder(schema);
+var t3 = getProcessMs();
 decoder.decode(message.buffer);
+var t4 = getProcessMs();
+console.log("decoding took " + (t4 - t3) + "ms");
